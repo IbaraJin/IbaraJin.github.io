@@ -1,7 +1,7 @@
 :root {
   color-scheme: light;
   --background: #ededf2;
-  --surface: rgba(255, 255, 255, 0.8);
+  --surface: rgba(246, 246, 250, 0.9);
   --text: #555565;
   --accent: #606080;
   --vibrant: #8080a0;
@@ -16,10 +16,7 @@
 
 html {
   min-height: 100%;
-  background:
-    linear-gradient(rgba(237, 237, 242, 0.22), rgba(237, 237, 242, 0.22)),
-    url("hexlay.png") center / min(100vmin, 64rem) auto no-repeat fixed,
-    var(--background);
+  background: var(--background);
 }
 
 body {
@@ -27,14 +24,27 @@ body {
   margin: 0;
   padding: clamp(1.25rem, 5vw, 4rem);
   display: grid;
+  grid-template-columns: minmax(22rem, 44rem) minmax(16rem, 1fr);
   grid-template-rows: 1fr auto;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(237, 237, 242, 0.96) 0%,
+      rgba(237, 237, 242, 0.82) 38%,
+      rgba(237, 237, 242, 0.18) 72%,
+      rgba(237, 237, 242, 0.02) 100%
+    ),
+    url("hexlay-background.png") right 2vw center /
+      min(72vw, 64rem) auto no-repeat fixed,
+    var(--background);
   color: var(--text);
 }
 
 .card {
-  width: min(100%, 52rem);
+  grid-column: 1;
+  width: min(100%, 42rem);
   margin: auto;
-  padding: clamp(2rem, 7vw, 5.25rem);
+  padding: clamp(2rem, 5.5vw, 4.5rem);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 2rem;
   background: var(--surface);
@@ -130,11 +140,28 @@ nav {
 }
 
 footer {
+  grid-column: 1 / -1;
   margin-top: 2rem;
   color: rgba(85, 85, 101, 0.72);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   text-align: center;
+}
+
+@media (max-width: 56rem) {
+  body {
+    grid-template-columns: 1fr;
+    background:
+      linear-gradient(rgba(237, 237, 242, 0.42), rgba(237, 237, 242, 0.42)),
+      url("hexlay-background.png") center / min(100vmin, 48rem) auto
+        no-repeat fixed,
+      var(--background);
+  }
+
+  .card {
+    grid-column: 1;
+    width: min(100%, 42rem);
+  }
 }
 
 @media (max-width: 34rem) {
