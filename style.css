@@ -1,13 +1,35 @@
+/* Material 3 (Material You). Colour roles are a tonal scheme built from the
+   existing lavender seed; type follows the M3 type scale; shape, elevation and
+   state layers use the M3 tokens. */
 :root {
   color-scheme: light;
-  --background: #ededf2;
-  --surface: rgba(246, 246, 250, 0.9);
-  --text: #555565;
-  --accent: #606080;
-  --vibrant: #8080a0;
-  --line: rgba(96, 96, 128, 0.24);
+
+  /* Colour roles */
+  --primary: #606080;
+  --on-primary: #ffffff;
+  --primary-container: #e1e0ff;
+  --surface: #ededf2;
+  --surface-container-low: #f3f3f5;
+  --on-surface: #404040;
+  --on-surface-variant: #808080;
+  --outline: #78767f;
+  --outline-variant: #c8c5d0;
+
+  /* Shape */
+  --shape-extra-large: 1.75rem;
+  --shape-full: 999px;
+
+  /* Elevation level 1 */
+  --elevation-1:
+    0 1px 2px rgba(27, 27, 33, 0.3),
+    0 1px 3px 1px rgba(27, 27, 33, 0.15);
+
+  /* Motion: emphasized decelerate */
+  --easing: cubic-bezier(0.05, 0.7, 0.1, 1);
+
   font-family:
-    "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    "Google Sans Flex", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "Segoe UI", system-ui, sans-serif;
 }
 
 * {
@@ -16,162 +38,234 @@
 
 html {
   min-height: 100%;
-  background: var(--background);
+  background: var(--surface);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  padding: clamp(1.25rem, 5vw, 4rem);
+  padding: clamp(1rem, 4vw, 3rem);
   display: grid;
-  grid-template-columns: minmax(22rem, 44rem) minmax(16rem, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr auto;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(237, 237, 242, 0.96) 0%,
-      rgba(237, 237, 242, 0.82) 38%,
-      rgba(237, 237, 242, 0.18) 72%,
-      rgba(237, 237, 242, 0.02) 100%
-    ),
-    url("hexlay-background.png") right 2vw center /
-      min(72vw, 64rem) auto no-repeat fixed,
-    var(--background);
-  color: var(--text);
+  justify-items: center;
+  color: var(--on-surface-variant);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Hexlay as its own artwork, bled off the bottom-right corner. No mask and no
+   tint: the mask filled the artwork's interiors with flat colour, which lost
+   the line work. Using the PNG directly also works over file://. */
+.decor {
+  position: fixed;
+  z-index: -1;
+  right: -5vmin;
+  bottom: -8vmin;
+  width: 42vmin;
+  height: 42vmin;
+  background: url("hexlay.png") center / contain no-repeat;
+  opacity: 0.5;
+}
+
+/* Filled card at the extra-large corner radius, elevation level 1. */
 .card {
-  grid-column: 1;
-  width: min(100%, 42rem);
+  /* 44rem keeps the three contact buttons on one row at desktop widths. */
+  width: min(100%, 44rem);
   margin: auto;
-  padding: clamp(2rem, 5.5vw, 4.5rem);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 2rem;
-  background: var(--surface);
-  box-shadow:
-    0 2rem 5rem rgba(66, 66, 92, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(18px);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--shape-extra-large);
+  background: var(--surface-container-low);
+  box-shadow: var(--elevation-1);
 }
 
+/* label-large: 14/20, 500. M3 labels are sentence case, not all caps. */
 .eyebrow,
 .event {
   margin: 0;
-  color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.007em;
+  line-height: 1.4286;
 }
 
+/* display-large: 57/64, 400, -0.25px */
 h1 {
-  margin: 0.55rem 0 0;
-  color: var(--accent);
-  font-size: clamp(3.3rem, 10vw, 6.7rem);
-  font-weight: 650;
-  letter-spacing: -0.065em;
-  line-height: 0.94;
+  margin: 0.5rem 0 0;
+  color: var(--on-surface);
+  font-size: clamp(2.25rem, min(7.5vmin, 7.4vw), 3.5625rem);
+  font-weight: 400;
+  letter-spacing: -0.004em;
+  line-height: 1.1228;
 }
 
+/* title-medium: 16/24, 500, 0.15px */
 .role {
-  margin: 0.85rem 0 0;
-  color: var(--vibrant);
-  font-size: clamp(1.05rem, 3vw, 1.4rem);
-  font-weight: 550;
-}
-
-.rule {
-  width: 4.5rem;
-  height: 0.3rem;
-  margin: clamp(2rem, 6vw, 3.6rem) 0;
-  border-radius: 999px;
-  background: var(--accent);
-}
-
-h2 {
-  max-width: 20ch;
-  margin: 0.8rem 0 0;
-  color: var(--accent);
-  font-size: clamp(1.65rem, 4vw, 2.65rem);
-  font-weight: 620;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
-}
-
-.note {
-  max-width: 38rem;
-  margin: 1.6rem 0 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
+  margin: 0.5rem 0 0;
+  color: var(--on-surface-variant);
   font-size: 1rem;
-  line-height: 1.65;
+  font-weight: 500;
+  letter-spacing: 0.009em;
+  line-height: 1.5;
 }
 
-nav {
+/* M3 dividers span the container. */
+.divider {
+  height: 1px;
+  margin: clamp(1.5rem, 4vw, 2rem) 0;
+  border: 0;
+  background: var(--outline-variant);
+}
+
+/* headline-medium: 28/36, 400 */
+h2 {
+  max-width: 28ch;
+  margin: 0.5rem 0 0;
+  color: var(--on-surface);
+  font-size: clamp(1.5rem, 4vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2857;
+  text-wrap: balance;
+}
+
+/* label-large for the day, then a two-column time/item list. */
+.schedule-day {
+  margin: 1.5rem 0 0;
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.007em;
+  line-height: 1.4286;
+}
+
+.schedule {
+  display: grid;
+  gap: 0.375rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.031em;
+}
+
+.schedule li {
+  display: grid;
+  grid-template-columns: 6.75rem 1fr;
+  gap: 0.75rem;
+}
+
+.schedule__time {
+  color: var(--primary);
+  font-weight: 500;
+  /* Keeps the two times the same width so the second column lines up. */
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* body-medium: 14/20, 400, 0.25px — the venue sits a step under the sessions. */
+.venue {
+  margin: 0.625rem 0 0;
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.018em;
+  line-height: 1.4286;
+}
+
+/* body-large: 16/24, 400, 0.5px. M3 body tracking is positive — the opposite of
+   the negative tracking an Apple-style scale uses. */
+.note {
+  max-width: 58ch;
+  margin: 1.5rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.031em;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-top: 2rem;
 }
 
+/* Filled button: 40px tall, fully rounded, label-large, 18px icon at 8px gap. */
 .button {
   display: inline-flex;
-  min-height: 3rem;
+  min-height: 2.5rem;
   align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.2rem;
-  border-radius: 999px;
-  color: #fff;
-  background: var(--accent);
-  font-weight: 650;
+  gap: 0.5rem;
+  padding: 0 1.5rem 0 1rem;
+  border-radius: var(--shape-full);
+  color: var(--on-primary);
+  background: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.007em;
   text-decoration: none;
   transition:
-    transform 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
+    background-image 150ms var(--easing),
+    box-shadow 150ms var(--easing);
 }
 
+.button__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: currentColor;
+}
+
+/* Outlined button: the two secondary contacts. */
+.button--outlined {
+  color: var(--primary);
+  background: none;
+  border: 1px solid var(--outline);
+}
+
+/* State layers: 8% of the on-colour on hover, 10% on press. */
 .button:hover {
-  transform: translateY(-2px);
-  background: #505070;
-  box-shadow: 0 0.75rem 1.5rem rgba(80, 80, 112, 0.2);
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.08)
+  );
+  box-shadow: var(--elevation-1);
+}
+
+.button:active {
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.1)
+  );
+  box-shadow: none;
+}
+
+/* An outlined button's state layer is tinted with primary, not white. */
+.button--outlined:hover,
+.button--outlined:active {
+  background-image: linear-gradient(
+    rgba(88, 91, 147, 0.08),
+    rgba(88, 91, 147, 0.08)
+  );
+  box-shadow: none;
 }
 
 .button:focus-visible {
-  outline: 3px solid rgba(96, 96, 128, 0.35);
-  outline-offset: 4px;
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
+/* body-small: 12/16, 400, 0.4px */
 footer {
-  grid-column: 1 / -1;
-  margin-top: 2rem;
-  color: rgba(85, 85, 101, 0.72);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  margin-top: 1.5rem;
+  color: var(--on-surface-variant);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.033em;
+  line-height: 1.3333;
   text-align: center;
-}
-
-@media (max-width: 56rem) {
-  body {
-    grid-template-columns: 1fr;
-    background:
-      linear-gradient(rgba(237, 237, 242, 0.42), rgba(237, 237, 242, 0.42)),
-      url("hexlay-background.png") center / min(100vmin, 48rem) auto
-        no-repeat fixed,
-      var(--background);
-  }
-
-  .card {
-    grid-column: 1;
-    width: min(100%, 42rem);
-  }
-}
-
-@media (max-width: 34rem) {
-  body {
-    padding: 0.8rem;
-  }
-
-  .card {
-    border-radius: 1.35rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
